@@ -1,0 +1,42 @@
+﻿variable,descripcion,tipo_conceptual,uso_modelamiento
+application_id,Identificador unico de la solicitud.,ID,No
+observation_date,Fecha de originacion/observacion. Usar para cortes temporales y OOT.,Fecha,Si
+entity,Entidad ficticia del caso.,Texto,No
+product,Producto del caso.,Texto,No
+age,Edad del solicitante en anos al momento de la solicitud.,Numerica,Si
+region,Macroregion declarada.,Categorica,Si
+channel,Canal de solicitud.,Categorica,Si
+employment_type,Tipo de actividad laboral/economica.,Categorica,Si
+monthly_income,Ingreso mensual declarado/estimado. Contiene faltantes intencionales.,Numerica,Si
+employment_tenure_months,Antiguedad laboral o actividad economica en meses.,Numerica,Si
+bureau_score,Score externo de buro disponible al originar. Contiene faltantes intencionales.,Numerica,Si
+prior_delinquencies_24m,Numero de episodios de mora previos en 24 meses.,Numerica,Si
+bureau_inquiries_6m,Consultas al buro en los ultimos 6 meses.,Numerica,Si
+active_loans,Numero de obligaciones activas reportadas.,Numerica,Si
+monthly_debt_payment,Cuota mensual total estimada de deudas existentes.,Numerica,Si
+dti,Debt-to-income: cuota mensual de deudas / ingreso mensual.,Numerica,Si
+savings_balance,Saldo de ahorros observado. Contiene faltantes intencionales.,Numerica,Si
+new_customer_flag,1 si no tenia relacion previa con la entidad; 0 en caso contrario.,Binaria,Si
+relationship_months,Meses de relacion previa; 0 para cliente nuevo.,Numerica,Si
+requested_amount,Monto solicitado o linea solicitada.,Numerica,Si
+term_months,Plazo contractual en meses. No aplica a productos revolventes.,Numerica,Si
+annual_interest_rate_offer,Tasa anual ofrecida en el proceso historico. Puede analizarse como variable de politica; evitar usarla como predictor si incorpora decision de riesgo.,Numerica,Condicional
+collateral_value,Valor de garantia al originar; solo aplica a casos garantizados.,Numerica,Si
+ltv,Loan-to-value al originar: monto / valor de garantia.,Numerica,Si
+credit_limit,Linea aprobada/solicitada de producto revolvente.,Numerica,Si
+balance_at_observation,Saldo utilizado en fecha de observacion para producto revolvente.,Numerica,Si
+utilization_at_observation,Saldo utilizado / linea en fecha de observacion.,Numerica,Si
+undrawn_amount_at_observation,Linea no utilizada en fecha de observacion.,Numerica,Si
+distance_to_branch_km,Distancia aproximada al punto de atencion mas cercano.,Numerica,Si
+household_dependents,Numero de dependientes economicos del hogar.,Numerica,Si
+cash_income_share,"Proporcion del ingreso recibida en efectivo [0,1].",Numerica,Si
+approved_flag,Decision historica de aprobacion. No es target de PD. Puede generar selection bias; debe discutirse.,Binaria,No para PD
+outcome_available_flag,1 si el credito fue aprobado/desembolsado y existe ventana de performance; usar como filtro para desarrollar PD.,Binaria,Filtro
+default_12m_flag,TARGET PD: 1 si el credito aprobado alcanzo 90+ dias de mora dentro de los 12 meses posteriores a observation_date; 0 si no. Rechazados tienen 0 tecnico y deben excluirse usando outcome_available_flag.,Binaria,Target
+ead_at_default,Exposicion observada al momento de default. Solo informada para defaults. TARGET/variable respuesta de EAD.,Numerica,Target EAD
+balance_at_default,Saldo contable al momento de default. Solo informado para defaults.,Numerica,No para PD; EAD
+ccf_observed,Credit Conversion Factor observado; principalmente para productos revolventes. Solo interpretable para defaults.,Numerica,Target/auxiliar EAD
+recovery_amount_total,Recuperaciones acumuladas del workout. Solo defaults.,Numerica,No para PD; LGD
+recovery_cost_total,Costos directos de recuperacion. Solo defaults.,Numerica,No para PD; LGD
+months_to_recovery,Meses transcurridos hasta cierre de recuperacion observado. Solo defaults.,Numerica,No para PD; LGD
+lgd_observed,"TARGET LGD observado = (EAD - recuperaciones + costos)/EAD, acotado [0,1]. Solo defaults.",Numerica,Target LGD

@@ -1,0 +1,15 @@
+dimension,key,metrica,direccion,verde,rojo,racional,historico_2021_2025,semaforo_hist,cosecha_2025,semaforo_2025
+Crecimiento,approval_rate_ttd,Tasa de aprobación sobre solicitudes (TTD),min,0.7,0.65,Mandato de crecer fuera de agencias; no caer >13 pp vs. histórico (82.6%).,0.8261428571428572,Verde,0.8160603980782429,Verde
+Riesgo,default_rate_12m,Default 12m (90+ DPD) de cosechas aprobadas,max,0.11,0.13,Volver a la media histórica (11.6%); 2024-2025 estuvo en 13.4%-14.0%.,0.11602974234826215,Ámbar,0.13372582001682085,Rojo
+Riesgo,el_rate,Expected Loss / monto desembolsado (PD x EAD x LGD),max,0.03,0.035,Pérdida realizada histórica 2.9%; 2024 llegó a 4.0%.,0.029340771274054902,Verde,0.033668629986649504,Ámbar
+Riesgo,lgd_mean,LGD media de defaults,max,0.65,0.7,"Crédito sin garantía: LGD histórica 62.3%, estable 61%-63%.",0.6228751117734724,Verde,0.6338937106918239,Verde
+Concentración,max_region_share,Mayor participación de una macrorregión en el monto,max,0.45,0.5,Riesgo climático/zonal correlacionado; Lima concentra 41.6%.,0.4163790701189117,Verde,0.40672498314732236,Verde
+Concentración,alianza_share,Participación del canal alianza en el monto,max,0.15,0.2,Riesgo de intermediario (datos inflados); hoy 9.6%.,0.09581658983501842,Verde,0.1033224848449811,Verde
+Concentración,new_customer_share,Participación de clientes nuevos en el monto,max,0.5,0.55,Clientes sin relación: default 12.7% vs 10.7%; hoy 44.8%.,0.4477996038279286,Verde,0.44939758139786246,Verde
+Concentración,thin_file_share,Participación de clientes sin score de buró en el monto,max,0.05,0.08,Espacio para incluir thin-file (hoy 3.2%) con evidencia aún escasa (193 casos).,0.03184870577213614,Verde,0.025235390980609607,Verde
+Concentración,long_term_share,Participación de plazos > 36 meses en el monto,max,0.25,0.3,Plazos largos exceden la ventana de 12m y el ciclo productivo; hoy 24.1%.,0.24105072407171912,Verde,0.22440941381184218,Verde
+Concentración,large_ticket_share,"Participación de montos > S/ 20,000 en el monto",max,0.12,0.15,Tickets fuera del rango de microcrédito; 4.2% de operaciones pero 14.5% del monto.,0.14465954515170196,Ámbar,0.1572558102037102,Rojo
+Concentración,remote_share,Participación de clientes a > 50 km de agencia en el monto,max,0.03,0.05,Costo de servir/cobrar; hoy 1.7%.,0.016501320543749625,Verde,0.016141236623060388,Verde
+Capacidad de pago,dti_post_gt60_share,Monto aprobado con DTI post-crédito > 60%,max,0.05,0.1,Sobreendeudamiento: default 16.8% con DTI post 60%-80%; hoy 21.6% del monto (sin control).,0.21641258147245657,Rojo,0.2216911750031282,Rojo
+Fair lending,air_region,Adverse Impact Ratio de aprobación entre macrorregiones,min,0.9,0.8,Regla 4/5; Oriente tiene la menor aprobación (78.8%) con el menor default.,0.943943431030949,Verde,0.8866089477096762,Ámbar
+Fair lending,air_cash,Adverse Impact Ratio de aprobación entre quintiles de ingreso en efectivo,min,0.9,0.8,No excluir por falta de trazabilidad bancaria (objetivo del caso).,0.988831615120275,Verde,0.9702649740138025,Verde

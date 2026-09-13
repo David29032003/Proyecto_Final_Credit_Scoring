@@ -1,0 +1,8 @@
+paso,criterio,excluidos,remanentes,pct_base
+0,Solicitudes en data.csv,0,7000,1.0
+1,Duplicados de application_id,0,7000,1.0
+2,observation_date nula o fuera de 2021-2025,0,7000,1.0
+3,Rechazados por la política histórica (approved_flag=0): sin performance,1217,5783,0.8261428571428572
+4,Aprobados sin ventana de performance (outcome_available_flag=0),0,5783,0.8261428571428572
+5,Target nulo o no binario,0,5783,0.8261428571428572
+6,Edad < 18 (fuera de elegibilidad legal),0,5783,0.8261428571428572

@@ -1,0 +1,42 @@
+variable,rol,fuente,momento,disponible_T0,uso_pd,racional,uso_oficial,pct_faltante
+application_id,ID,Sistema de originación,T0,Sí,No,Identificador; sin contenido de riesgo.,No,0.0
+observation_date,Tiempo,Sistema de originación,T0,Sí,No,Solo para split temporal y seguimiento de cosechas.,Si,0.0
+entity,Metadato,Constante,T0,Sí,No,Constante (1 valor).,No,0.0
+product,Metadato,Constante,T0,Sí,No,Constante (1 valor).,No,0.0
+age,Solicitud,Documento de identidad / RENIEC,T0,Sí,Candidata (fairness),Característica protegida en marcos de fair lending; sin reglas de rechazo por edad fuera de la elegibilidad legal.,Si,0.0
+region,Solicitud,Dirección declarada,T0,Sí,Candidata (fairness),Riesgo de discriminación territorial (énfasis del caso).,Si,0.0
+channel,Proceso,Canal de captación,T0,Sí,Candidata,"Variable de proceso; útil para reglas operativas (fraude, verificación).",Si,0.0
+employment_type,Solicitud,Declarado,T0,Sí,Candidata,Tipo de actividad económica declarada.,Si,0.0
+monthly_income,Solicitud,Declarado / estimado por asesor,T0,Sí,Candidata,Disponible pero difícil de verificar cuando es en efectivo; 2.4% faltante.,Si,0.024285714285714285
+employment_tenure_months,Solicitud,Declarado,T0,Sí,Candidata,Antigüedad de la actividad; 100 casos inconsistentes con la edad.,Si,0.0
+bureau_score,Buró,Consulta a buró en T0,T0,Sí,Candidata,3.3% sin score (thin-file): el faltante es informativo y NO excluye.,Si,0.03271428571428572
+prior_delinquencies_24m,Buró,Consulta a buró en T0,T0,Sí,Candidata,Historial de mora de los 24 meses previos a T0.,Si,0.0
+bureau_inquiries_6m,Buró,Consulta a buró en T0,T0,Sí,Candidata,Consultas previas a T0 (sin contar la consulta de esta solicitud).,Si,0.0
+active_loans,Buró,Consulta a buró en T0,T0,Sí,Candidata,Obligaciones vigentes en T0.,Si,0.0
+monthly_debt_payment,Buró,Consulta a buró en T0,T0,Sí,Candidata,Cuota de deudas existentes; no incluye la cuota del crédito solicitado.,Si,0.0
+dti,Derivada,Buró / ingreso declarado,T0,Sí,Candidata,= monthly_debt_payment / monthly_income. No incluye la nueva cuota.,Si,0.0
+savings_balance,Interno,Core de ahorros / declarado,T0,Sí,Candidata,7.7% faltante.,Si,0.07714285714285714
+new_customer_flag,Interno,CRM,T0,Sí,Candidata,Relación previa con la Caja.,Si,0.0
+relationship_months,Interno,CRM,T0,Sí,Candidata,0 para clientes nuevos (consistente); 205 casos exceden la edad adulta.,Si,0.0
+requested_amount,Solicitud,Declarado,T0,Sí,Candidata,Monto solicitado (no el aprobado).,Si,0.0
+term_months,Solicitud,Declarado,T0,Sí,Candidata,Supuesto: plazo solicitado/propuesto antes de la decisión (existe también en rechazados).,Si,0.0
+annual_interest_rate_offer,Política,Motor de pricing histórico,T0 (output de política),Sí,Excluida,Endógena: resulta de la evaluación de riesgo previa (corr. Spearman -0.43 con bureau_score).,Condicional,0.0
+collateral_value,No aplica,-,-,No,No,100% vacío: producto sin garantía.,Si,1.0
+ltv,No aplica,-,-,No,No,100% vacío: producto sin garantía.,Si,1.0
+credit_limit,No aplica,-,-,No,No,100% vacío: producto no revolvente.,Si,1.0
+balance_at_observation,No aplica,-,-,No,No,100% vacío: producto no revolvente.,Si,1.0
+utilization_at_observation,No aplica,-,-,No,No,100% vacío: producto no revolvente.,Si,1.0
+undrawn_amount_at_observation,No aplica,-,-,No,No,100% vacío: producto no revolvente.,Si,1.0
+distance_to_branch_km,Solicitud,Geocodificación de la dirección,T0,Sí,Candidata (fairness),Proxy de ruralidad/territorio; más relevante para costo de servir y cobranza.,Si,0.0
+household_dependents,Solicitud,Declarado,T0,Sí,Candidata (fairness),Proxy de situación familiar.,Si,0.0
+cash_income_share,Solicitud,Declarado / evaluación del asesor,T0,Sí,Candidata (fairness),Proxy de informalidad: no debe penalizar por sí misma sin evidencia de riesgo (objetivo del caso).,Si,0.0
+approved_flag,Decisión,Decisión histórica,Post-decisión,No,No,Resultado de la decisión que el modelo busca reemplazar; genera sesgo de selección.,No para PD,0.0
+outcome_available_flag,Filtro,Performance,T0+12m,No,Filtro,Filtro obligatorio de población PD (=1).,Filtro,0.0
+default_12m_flag,Target PD,Performance,T0+12m,No,Target,"90+ DPD en (T0, T0+12m].",Target,0.0
+ead_at_default,Post-default,Performance,Fecha de default,No,No,Exposición al default.,Target EAD,0.9041428571428571
+balance_at_default,Post-default,Performance,Fecha de default,No,No,Idéntica a ead_at_default en el 100% de defaults.,No para PD; EAD,0.9041428571428571
+ccf_observed,No aplica,-,-,No,No,100% vacío: producto no revolvente.,Target/auxiliar EAD,1.0
+recovery_amount_total,Post-default,Workout,Post-default,No,No,Recuperaciones.,No para PD; LGD,0.9041428571428571
+recovery_cost_total,Post-default,Workout,Post-default,No,No,Costos de recuperación.,No para PD; LGD,0.9041428571428571
+months_to_recovery,Post-default,Workout,Post-default,No,No,Tiempo de workout.,No para PD; LGD,0.9041428571428571
+lgd_observed,Post-default,Workout,Post-default,No,No,Severidad observada.,Target LGD,0.9041428571428571
