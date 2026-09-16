@@ -1,0 +1,21 @@
+variable,tipo,n_unicos,pct_unicos,categorias_menores_al_umbral
+new_customer_flag,int64,2,0.0003458412588621823,
+employment_type,object,4,0.0006916825177243646,
+channel,object,4,0.0006916825177243646,
+region,object,5,0.0008646031471554556,
+prior_delinquencies_24m,int64,6,0.0010375237765865469,"3 (1.6%), 4 (0.2%), 5 (0.1%)"
+term_months,float64,8,0.0013833650354487291,
+household_dependents,int64,9,0.0015562856648798202,"5 (4.9%), 6 (1.7%), 7 (0.6%), 8 (0.1%)"
+bureau_inquiries_6m,int64,10,0.0017292062943109112,"5 (2.5%), 6 (0.6%), 7 (0.3%), 8 (0.0%), 9 (0.0%)"
+active_loans,int64,11,0.0019021269237420025,"5 (3.9%), 6 (1.4%), 7 (0.2%), 8 (0.1%), 10 (0.0%), 9 (0.0%)"
+age,int64,54,0.00933771398927892,
+relationship_months,int64,146,0.025246411896939304,
+employment_tenure_months,int64,160,0.02766730070897458,
+bureau_score,float64,390,0.06743904547812554,
+distance_to_branch_km,float64,511,0.08836244163928757,
+dti,float64,3590,0.6207850596576171,
+savings_balance,float64,5316,0.9192460660556805,
+monthly_income,float64,5608,0.969738889849559,
+monthly_debt_payment,float64,5712,0.9877226353103925,
+requested_amount,float64,5776,0.9987895555939824,
+cash_income_share,float64,5783,1.0,

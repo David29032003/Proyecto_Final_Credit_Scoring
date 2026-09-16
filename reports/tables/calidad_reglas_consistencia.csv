@@ -1,0 +1,20 @@
+regla,severidad,violaciones,pct,tratamiento
+relación con la Caja <= (edad - 18) * 12,Baja,160,0.02766730070897458,Se conserva: es plausible una cuenta de ahorros abierta antes de la mayoría de edad. Se marca para revisión de captura.
+"ingreso mensual >= S/ 1,025 (referencia)",Informativa,103,0.017810824831402387,"Se conservan: en el segmento rural informal un ingreso bajo la referencia es plausible, no un error."
+antigüedad laboral <= (edad - 14) * 12,Media,81,0.014006570983918382,Se conserva el registro; la derivada antiguedad_relativa se acota a 1 y la winsorización limita el extremo.
+cuota estimada <= ingreso mensual,Alta,1,0.00017292062943109114,Caso aislado: la solicitud es inviable por capacidad y la regla de DTI la deriva a revisión.
+dti = cuota de deuda / ingreso,Alta,0,0.0,Sin violaciones: el dti del archivo es coherente con sus insumos.
+new_customer_flag = 1 <-> relationship_months = 0,Alta,0,0.0,Sin violaciones.
+"cash_income_share dentro de [0, 1]",Alta,0,0.0,Sin violaciones.
+dti <= 1,Alta,0,0.0,Sin violaciones.
+plazo dentro del catálogo del producto,Alta,0,0.0,Sin violaciones.
+"bureau_score dentro de [300, 900]",Alta,0,0.0,Sin violaciones.
+savings_balance >= 0,Alta,0,0.0,Sin violaciones.
+default = 1 -> exposición informada,Alta,0,0.0,Sin violaciones: los 671 defaults tienen EAD y LGD.
+default = 0 -> campos post-default vacíos,Alta,0,0.0,Sin violaciones: no hay contaminación de campos post-evento.
+distancia a agencia > 0,Alta,0,0.0,Sin violaciones.
+edad entre 18 y 75 años,Bloqueante,0,0.0,Sin violaciones.
+edad + plazo <= 75 años al vencimiento,Bloqueante,0,0.0,Sin violaciones.
+monto solicitado > 0,Bloqueante,0,0.0,Sin violaciones.
+EAD <= monto solicitado,Media,0,0.0,Sin violaciones.
+recuperaciones <= EAD,Media,0,0.0,Sin violaciones.
