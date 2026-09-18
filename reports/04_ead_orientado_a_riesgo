@@ -1,0 +1,162 @@
+`python
+%% [markdown]
+
+02 - EDA orientado a riesgo (sección 6.4)
+
+Caso 15 - Caja Rural 360 | Microcredito rural para independientes
+
+Evidencia para 'reports/04edariesgo.md'. Genera las tablas en 'reports/tables/' y las figuras en 'reports/figures/' (fig11 a fig18).
+
+%% 
+import sys
+sys.path.append("./src")
+import pandas as pd
+import matplotlib.pyplot as plt
+import eda
+
+pd.setoption("display.maxcolumns", 50)
+
+df = pd.readcsv("../data.csv", parsedates=["observation_date"])
+pop = eda.tomodelable(df)  # outcomeavailable_flag == 1
+globalrate = eda.overallbad_rate(pop)
+print(f"Total: {len(df)} | N modelable PD: {len(pop)} | Bad rate global: {global_rate:.2%}")
+
+%% [markdown]
+
+1. Bad rate global y composición de cartera
+
+%% 
+summary = pd.DataFrame({
+    "poblacion": ["Total base", "Rechazados (sin outcome)", "Modelable PD (outcome=1)", "Default en modelable"],
+    "n": [len(df), (df.outcomeavailableflag == 0).sum(), len(pop), pop.default12mflag.sum()]
+})
+summary["pctsobretotal"] = summary["n"] / len(df)
+summary.tocsv("../reports/tables/eda00resumenpoblacion.csv", index=False)
+summary
+
+%% [markdown]
+
+2. Bad rate por bureau_score (variable mas discriminante) - Figura 11
+
+%%
+tabbureau = eda.badratebydecile(pop, "bureau_score", q=10)
+tabbureau.tocsv("../reports/tables/eda01badratebureauscore.csv", index=False)
+fig = eda.plotbadratebars(tabbureau, "bin", title="Bad rate por decil de bureauscore", globalrate=global_rate)
+fig.savefig("../reports/figures/fig11badratebureau_score.png", dpi=150)
+tab_bureau
+
+%% [markdown]
+
+3. Bad rate por DTI (relacion no lineal tipo 'J') - Figura 12
+
+%%
+tabdti = eda.badratebydecile(pop, "dti", q=10)
+tabdti.tocsv("../reports/tables/eda02badrate_dti.csv", index=False)
+fig = eda.plotbadratebars(tabdti, "bin", title="Bad rate por decil de DTI", globalrate=globalrate)
+fig.savefig("../reports/figures/fig12badratedti.png", dpi=150)
+tab_dti
+
+%% [markdown]
+
+4. Interaccion bureau_score x DTI (superaditividad) - Figura 13
+
+%%
+inter = eda.twowayinteraction(pop, "bureauscore", "dti", thra=611, thr_b=0.421,
+    label_a=("alto (>=611)", "bajo (<611)"),
+    label_b=("bajo (<0.42)", "alto (>=0.42)"))
+inter.tocsv("../reports/tables/eda03interaccionbureau_dti.csv", index=False)
+fig = eda.plotheatmap2x2(inter, "bureauscore", "dti", title="Bad rate: bureauscore x DTI")
+fig.savefig("../reports/figures/fig13interaccionbureau_dti.png", dpi=150)
+inter
+
+%% [markdown]
+
+5. Cosechas (vintages) trimestrales - Figura 14
+
+%%
+vint = eda.vintagebadrate(pop, freq="Q")
+vint.tocsv("../reports/tables/eda04vintagebadrate.csv", index=False)
+fig = eda.plottrendline(vint, "vintage", "bad_rate", title="Bad rate por cosecha trimestral de originacion")
+fig.savefig("../reports/figures/fig14vintagebadrate.png", dpi=150)
+vint
+
+%% [markdown]
+
+6. Tasa de aprobacion vs bad rate por cosecha (politica vs deterioro) - Figura 15
+
+%%
+appr = eda.approvalratetrend(df, freq="Q")
+appr.tocsv("../reports/tables/eda05approvaltrend.csv", index=False)
+fig = eda.plottrendline(vint, "vintage", "bad_rate", title="Bad rate vs tasa de aprobacion por cosecha",
+                          secondaryycol="approvalrate", secondarylabel="approval_rate")
+fig.savefig("../reports/figures/fig15approvalvs_badrate.png", dpi=150)
+appr
+
+%% [markdown]
+
+7. Sesgo de seleccion: bureau_score en aprobados vs rechazados
+
+%%
+sel = eda.selectionbiascheck(df, "bureau_score")
+sel.tocsv("../reports/tables/eda06selectionbias_bureau.csv")
+sel
+
+%% [markdown]
+
+8. Bad rate por segmentos categoricos: region, canal, tipo de empleo, cliente nuevo - Figura 16
+
+%%
+for col in ["region", "channel", "employmenttype", "newcustomer_flag"]:
+    t = eda.badrateby_category(pop, col)
+    t.tocsv(f"../reports/tables/eda07badrate{col}.csv", index=False)
+    print(col)
+    display(t)
+
+%%
+tregion = eda.badratebycategory(pop, "region")
+fig = eda.plotbadratebars(tregion, "region", title="Bad rate por region", globalrate=globalrate)
+fig.savefig("../reports/figures/fig16badrateregion.png", dpi=150)
+
+%% [markdown]
+
+9. Ahorros (savings_balance): relacion protectora y faltantes - Figura 17
+
+%%
+tabsav = eda.badratebydecile(pop, "savings_balance", q=10)
+tabsav.tocsv("../reports/tables/eda08badrate_savings.csv", index=False)
+fig = eda.plotbadratebars(tabsav, "bin", title="Bad rate por decil de savingsbalance", globalrate=global_rate)
+fig.savefig("../reports/figures/fig17badratesavings.png", dpi=150)
+
+misssav = eda.missingratevsbadrate(pop, "savingsbalance")
+misssav.tocsv("../reports/tables/eda09missingsavingsvs_badrate.csv", index=False)
+miss_sav
+
+%% [markdown]
+
+10. Variables discretas ruidosas: priordelinquencies24m, activeloans, bureauinquiries6m, householddependents
+
+%%
+for col in ["priordelinquencies24m", "activeloans", "bureauinquiries6m", "householddependents"]:
+    t = pop.groupby(col)["default12mflag"].agg(badrate=("mean", n="count")).resetindex()
+    t.tocsv(f"../reports/tables/eda10badrate{col}.csv", index=False)
+    print(col)
+    display(t)
+
+%% [markdown]
+
+11. Variables 100% NA para este producto (documentacion de alcance) - Figura 18
+
+%%
+nacols = ["creditlimit", "balanceatobservation", "utilizationatobservation",
+           "undrawnamountatobservation", "ccfobserved", "collateral_value", "ltv"]
+nacheck = df[nacols].isna().mean().reset_index()
+nacheck.columns = ["variable", "pctna"]
+nacheck.tocsv("../reports/tables/eda11variablesnoaplican_producto.csv", index=False)
+na_check
+
+%% [markdown]
+
+12. Guardado consolidado de hallazgos
+
+Ver reports/04edariesgo.md para la interpretacion y el impacto en politica/modelo de cada hallazgo.
+`
