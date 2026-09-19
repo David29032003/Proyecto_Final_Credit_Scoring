@@ -1,0 +1,5 @@
+poblacion,n,pct_sobre_total
+Total base,5783,1.0
+Rechazados (sin outcome),0,0.0
+Modelable PD (outcome=1),5783,1.0
+Default en modelable,671,0.11602974234826215

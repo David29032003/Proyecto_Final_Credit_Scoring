@@ -1,0 +1,8 @@
+variable,pct_na
+credit_limit,1.0
+balance_at_observation,1.0
+utilization_at_observation,1.0
+undrawn_amount_at_observation,1.0
+ccf_observed,1.0
+collateral_value,1.0
+ltv,1.0
